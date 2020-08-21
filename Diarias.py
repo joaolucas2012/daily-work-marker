@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import messagebox
 import os.path
 import pickle
-
+ 
 # Classe que representa uma diaria
 class Diaria:
     # A diária é ganha em um dia do mês, e possui uma quantia para o salário
