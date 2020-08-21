@@ -3,7 +3,7 @@ import tkinter as tk
 from tkinter import messagebox
 import os.path
 import pickle
-
+ 
 # Importando Diarias.py e Historico.py
 import Diarias as diarias
 import Historico as hist
