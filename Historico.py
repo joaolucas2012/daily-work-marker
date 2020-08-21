@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import messagebox
 import os.path
 import pickle
-
+ 
 # Exceptions de tratamento de erros
 # Caso não haja dados cadastrados para tal operação
 class NaoHaDados(Exception):
