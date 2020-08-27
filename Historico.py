@@ -47,7 +47,7 @@ class LimiteConsultaHistorico(tk.Toplevel):
         # Frame de enunciado
         self.frameEnunciado = tk.Frame(self)
         self.frameEnunciado.pack()
-        self.labelEnunciado = tk.label(self.frameEnunciado, text='Escolha o histórico que deseja consultar:\n\n', font = ('Arial', 10))
+        self.labelEnunciado = tk.Label(self.frameEnunciado, text='Escolha o histórico que deseja consultar:\n\n', font = ('Arial', 10))
         self.labelEnunciado.pack()
 
         # Frame dos botões
@@ -55,9 +55,14 @@ class LimiteConsultaHistorico(tk.Toplevel):
         self.frameButtons.pack()
 
         # Botão de diárias recebidas
-        self.buttonDiariasRecebidas = tk.Button(self.frameButtons, text='Diarias recebidas', font = ('Arial', 10))
+        self.buttonDiariasRecebidas = tk.Button(self.frameButtons, text='Diarias recebidas', font = ('Negrito', 10))
         self.buttonDiariasRecebidas.pack(side='left')
         self.buttonDiariasRecebidas.bind("<Button>", controle.MostraRecebidas)
+
+        # Botão de diárias pendentes
+        self.buttonDiariasPendentes = tk.Button(self.frameButtons, text='Diarias pendentes', font = ('Negrito', 10))
+        self.buttonDiariasPendentes.pack(side='left')
+        self.buttonDiariasPendentes.bind("Button", controle.MostraPendentes)
 
 # Criando um controle para o histórico
 class CtrlHistorico():       
@@ -103,16 +108,37 @@ class CtrlHistorico():
             if len(listaDiariasReceb) == 0:
                 raise NaoHaDados()
         except NaoHaDados:
-                self.mensagem('Não há dados cadastrados', 'Nenhuma diária foi recebida ainda!')   
+            self.mensagem('Não há dados cadastrados', 'Nenhuma diária foi recebida ainda!')   
         else:
             str = ''
             nroDiarias = 0
-            nroMeses = 0
             salarioTotal = 0
             for diaria in listaDiariasReceb:
                 nroDiarias += 1
                 salarioTotal += int(diaria.getSalario())
-                mes = diaria.getMes()
             str += f'Foram recebidas {nroDiarias} diárias.'
             str += 'Valor total recebido em todo o período:\n'
             str += f'R${salarioTotal},00'
+            self.mensagem('Histórico de diárias recebidas', str)
+    
+    # Função que mostra as diárias pendentes
+    def MostraPendentes(self):
+        listaDiariasPendent = self.getHistorico().getDiariasPendentes()
+        try:
+            # Se a lista estiver vazia, não há dados cadastrados
+            if len(listaDiariasPendent) == 0:
+                raise NaoHaDados()
+        except NaoHaDados:
+            self.mensagem('Não há dados cadastrados', 'Não há diárias pendentes!') 
+        else:
+            str = 'Estas são as diárias pendentes (que ainda precisam ser recebidas), ordenadas por dia do mês:\n'  
+            nroDiarias = 0
+            salarioTotal = 0
+            for diaria in listaDiariasPendent:
+                nroDiarias += 1
+                salarioTotal += int(diaria.getSalario())
+                str += f'{diaria.getDia()}/{diaria.getMes()}: {diaria.getSalario()}' + '\n'
+            str += f'Faltam ser recebidas {nroDiarias} diárias' + '\n'
+            str += f'Valor do salário total pendente: R${salarioTotal},00'
+            self.mensagem('Histórico de diárias recebidas', str)
+
