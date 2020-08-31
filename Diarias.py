@@ -22,3 +22,23 @@ class Diaria:
     # Método que retorna o valor do salário da diaria
     def getSalario(self):
         return self.__salario
+
+
+# Criando um controle para as diárias
+class CtrlDiarias():       
+    def __init__(self):
+        # Verificando se não há dados salvos
+        # Se não tiver dados salvos, é criada uma lista que conterá os dados
+        if not os.path.isfile("diarias.pickle"):
+            self.diarias = []
+        # Se tiver dados salvos, a lista com os dados é resgatada
+        else:
+            with open("diarias.pickle", "rb") as f:
+                self.diarias = pickle.load(f)
+    
+    # Função que salva os dados das diárias, se a lista não estiver vazia, claro
+    def salvaDiarias(self):
+        if len(self.diarias) != 0:
+            with open("diarias.pickle","wb") as f:
+                pickle.dump(self.diarias, f)
+    
