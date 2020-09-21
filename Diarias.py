@@ -41,4 +41,7 @@ class CtrlDiarias():
         if len(self.diarias) != 0:
             with open("diarias.pickle","wb") as f:
                 pickle.dump(self.diarias, f)
+
+    def mensagem(self, titulo, msg):
+        messagebox.showinfo(titulo, msg)
     
