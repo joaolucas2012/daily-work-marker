@@ -23,6 +23,26 @@ class Diaria:
     def getSalario(self):
         return self.__salario
 
+# Criando uma janela para cadastro de diárias
+class LimiteCadastroDiaria(tk.Toplevel):
+    # Personalizando a janela de cadastro de diárias
+    def __init__(self, controle):
+        tk.Toplevel.__init__(self)
+        self.geometry('250x100')
+        self.title("Cadastrar Diárias")
+        self.controle = controle
+
+        # Frame de enunciado
+        self.frameEnunciado = tk.Frame(self)
+        self.frameEnunciado.pack()
+        self.labelEnunciado = tk.Label(self.frameEnunciado, text='Digite o dia, mês e salário recebido:\n\n', font = ('Arial', 10))
+        self.labelEnunciado.pack()
+
+        # Frame dos botões
+        self.frameButtons = tk.Frame(self)
+        self.frameButtons.pack()
+
+
 
 # Criando um controle para as diárias
 class CtrlDiarias():       
@@ -42,6 +62,10 @@ class CtrlDiarias():
             with open("diarias.pickle","wb") as f:
                 pickle.dump(self.diarias, f)
 
+    # Função que mostra mensagens
     def mensagem(self, titulo, msg):
         messagebox.showinfo(titulo, msg)
-    
+
+    # Função que chama a janela de cadastro das diárias
+    def insereDiarias(self):
+        self.limiteCons = LimiteCadastroDiaria(self) 
